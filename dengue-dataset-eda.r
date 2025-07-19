@@ -3,82 +3,443 @@
   {
    "cell_type": "code",
    "execution_count": 1,
-   "id": "8a6d10d1",
+   "id": "fe56cc12",
    "metadata": {
     "_cell_guid": "b1076dfc-b9ad-4769-8c92-a6c4dae69d19",
     "_uuid": "8f2839f25d086af736a60e9eeb907d3b93b6e0e5",
     "execution": {
-     "iopub.execute_input": "2025-07-19T00:12:47.282411Z",
-     "iopub.status.busy": "2025-07-19T00:12:47.280136Z",
-     "iopub.status.idle": "2025-07-19T00:12:48.236535Z",
-     "shell.execute_reply": "2025-07-19T00:12:48.234049Z"
+     "iopub.execute_input": "2025-07-19T02:57:52.361144Z",
+     "iopub.status.busy": "2025-07-19T02:57:52.359080Z",
+     "iopub.status.idle": "2025-07-19T02:57:53.089126Z",
+     "shell.execute_reply": "2025-07-19T02:57:53.087270Z"
     },
     "papermill": {
-     "duration": 0.966627,
-     "end_time": "2025-07-19T00:12:48.240021",
+     "duration": 0.740015,
+     "end_time": "2025-07-19T02:57:53.091474",
      "exception": false,
-     "start_time": "2025-07-19T00:12:47.273394",
+     "start_time": "2025-07-19T02:57:52.351459",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "suppressPackageStartupMessages({\n",
+    "  library(readxl)\n",
+    "  library(dplyr)\n",
+    "  library(tidyr)\n",
+    "  library(stringr)\n",
+    "  library(readr)\n",
+    "  library(ggplot2)\n",
+    "  library(patchwork)\n",
+    "})\n",
+    "\n",
+    "  dengue <- read_excel(\"/kaggle/input/dengue-dataset/Dengue.xlsx\", skip = 8)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "id": "02be60c4",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-07-19T02:57:53.176718Z",
+     "iopub.status.busy": "2025-07-19T02:57:53.103176Z",
+     "iopub.status.idle": "2025-07-19T02:57:53.468601Z",
+     "shell.execute_reply": "2025-07-19T02:57:53.466725Z"
+    },
+    "papermill": {
+     "duration": 0.374905,
+     "end_time": "2025-07-19T02:57:53.471240",
+     "exception": false,
+     "start_time": "2025-07-19T02:57:53.096335",
      "status": "completed"
     },
     "tags": []
    },
    "outputs": [
     {
-     "name": "stderr",
-     "output_type": "stream",
-     "text": [
-      "\n",
-      "Attaching package: ‘dplyr’\n",
-      "\n",
-      "\n"
-     ]
-    },
-    {
-     "name": "stderr",
-     "output_type": "stream",
-     "text": [
-      "The following objects are masked from ‘package:stats’:\n",
-      "\n",
-      "    filter, lag\n",
-      "\n",
-      "\n"
-     ]
-    },
-    {
-     "name": "stderr",
-     "output_type": "stream",
-     "text": [
-      "The following objects are masked from ‘package:base’:\n",
-      "\n",
-      "    intersect, setdiff, setequal, union\n",
-      "\n",
-      "\n"
-     ]
+     "data": {
+      "text/html": [
+       "<table class=\"dataframe\">\n",
+       "<caption>A tibble: 55 × 17</caption>\n",
+       "<thead>\n",
+       "\t<tr><th scope=col>Philippines</th><th scope=col>46389</th><th scope=col>415</th><th scope=col>57818</th><th scope=col>548</th><th scope=col>173029</th><th scope=col>1057</th><th scope=col>125975</th><th scope=col>654</th><th scope=col>187031</th><th scope=col>921</th><th scope=col>204906</th><th scope=col>660</th><th scope=col>121580</th><th scope=col>465</th><th scope=col>213930</th><th scope=col>647</th></tr>\n",
+       "\t<tr><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th></tr>\n",
+       "</thead>\n",
+       "<tbody>\n",
+       "\t<tr><td>NA                                                 </td><td>NA   </td><td>NA    </td><td>NA   </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td></tr>\n",
+       "\t<tr><td>NCR                                                </td><td>13975</td><td>90    </td><td>12763</td><td>122   </td><td>23644 </td><td>133   </td><td>28040 </td><td>161   </td><td>35796 </td><td>143   </td><td>23437 </td><td>52    </td><td>8929  </td><td>44    </td><td>26804 </td><td>115   </td></tr>\n",
+       "\t<tr><td>CAR                                                </td><td>590  </td><td>2     </td><td>1849 </td><td>6     </td><td>6297  </td><td>13    </td><td>4695  </td><td>19    </td><td>5751  </td><td>12    </td><td>8718  </td><td>17    </td><td>2582  </td><td>7     </td><td>10403 </td><td>11    </td></tr>\n",
+       "\t<tr><td>I                                                  </td><td>3375 </td><td>29    </td><td>2793 </td><td>26    </td><td>5580  </td><td>41    </td><td>14389 </td><td>73    </td><td>9619  </td><td>42    </td><td>16564 </td><td>46    </td><td>6985  </td><td>18    </td><td>17605 </td><td>41    </td></tr>\n",
+       "\t<tr><td>II                                                 </td><td>1210 </td><td>13    </td><td>2226 </td><td>38    </td><td>6105  </td><td>37    </td><td>9673  </td><td>45    </td><td>7886  </td><td>30    </td><td>15946 </td><td>27    </td><td>3854  </td><td>17    </td><td>13855 </td><td>17    </td></tr>\n",
+       "\t<tr><td>III                                                </td><td>7141 </td><td>58    </td><td>2932 </td><td>34    </td><td>10710 </td><td>67    </td><td>26878 </td><td>59    </td><td>28360 </td><td>61    </td><td>20615 </td><td>34    </td><td>14471 </td><td>19    </td><td>37047 </td><td>49    </td></tr>\n",
+       "\t<tr><td>IVA                                                </td><td>4159 </td><td>31    </td><td>7215 </td><td>42    </td><td>24851 </td><td>106   </td><td>17567 </td><td>107   </td><td>29843 </td><td>121   </td><td>30219 </td><td>64    </td><td>15111 </td><td>30    </td><td>36033 </td><td>109   </td></tr>\n",
+       "\t<tr><td>IVB                                                </td><td>273  </td><td>4     </td><td>171  </td><td>2     </td><td>2242  </td><td>26    </td><td>1580  </td><td>9     </td><td>2346  </td><td>12    </td><td>5108  </td><td>14    </td><td>2591  </td><td>15    </td><td>3632  </td><td>10    </td></tr>\n",
+       "\t<tr><td>V                                                  </td><td>650  </td><td>7     </td><td>1213 </td><td>3     </td><td>3327  </td><td>19    </td><td>1715  </td><td>7     </td><td>3777  </td><td>13    </td><td>2973  </td><td>15    </td><td>2329  </td><td>11    </td><td>2014  </td><td>8     </td></tr>\n",
+       "\t<tr><td>VI                                                 </td><td>2246 </td><td>20    </td><td>5241 </td><td>84    </td><td>27400 </td><td>137   </td><td>3206  </td><td>39    </td><td>11880 </td><td>97    </td><td>22461 </td><td>69    </td><td>8489  </td><td>27    </td><td>10353 </td><td>26    </td></tr>\n",
+       "\t<tr><td>VII                                                </td><td>3424 </td><td>96    </td><td>7070 </td><td>79    </td><td>15362 </td><td>116   </td><td>5373  </td><td>26    </td><td>19193 </td><td>89    </td><td>15853 </td><td>57    </td><td>6566  </td><td>26    </td><td>14423 </td><td>87    </td></tr>\n",
+       "\t<tr><td>VIII                                               </td><td>905  </td><td>11    </td><td>1101 </td><td>13    </td><td>12022 </td><td>93    </td><td>867   </td><td>6     </td><td>1669  </td><td>12    </td><td>3750  </td><td>12    </td><td>5239  </td><td>21    </td><td>2011  </td><td>5     </td></tr>\n",
+       "\t<tr><td>IX                                                 </td><td>2172 </td><td>8     </td><td>1630 </td><td>9     </td><td>4917  </td><td>46    </td><td>1592  </td><td>23    </td><td>5498  </td><td>42    </td><td>5959  </td><td>42    </td><td>6755  </td><td>28    </td><td>6982  </td><td>22    </td></tr>\n",
+       "\t<tr><td>X                                                  </td><td>1073 </td><td>14    </td><td>2239 </td><td>26    </td><td>7414  </td><td>58    </td><td>2000  </td><td>8     </td><td>6550  </td><td>48    </td><td>5361  </td><td>49    </td><td>11752 </td><td>65    </td><td>10303 </td><td>44    </td></tr>\n",
+       "\t<tr><td>XI                                                 </td><td>3168 </td><td>18    </td><td>4179 </td><td>35    </td><td>9165  </td><td>86    </td><td>4178  </td><td>37    </td><td>10107 </td><td>109   </td><td>10886 </td><td>62    </td><td>8561  </td><td>44    </td><td>5057  </td><td>21    </td></tr>\n",
+       "\t<tr><td>XII                                                </td><td>1102 </td><td>6     </td><td>3242 </td><td>10    </td><td>9937  </td><td>55    </td><td>2735  </td><td>26    </td><td>4573  </td><td>53    </td><td>13064 </td><td>68    </td><td>7247  </td><td>40    </td><td>9586  </td><td>31    </td></tr>\n",
+       "\t<tr><td>Caraga                                             </td><td>663  </td><td>5     </td><td>1548 </td><td>11    </td><td>3126  </td><td>13    </td><td>1208  </td><td>5     </td><td>2724  </td><td>23    </td><td>3593  </td><td>29    </td><td>8618  </td><td>43    </td><td>6701  </td><td>41    </td></tr>\n",
+       "\t<tr><td>ARMM                                               </td><td>263  </td><td>3     </td><td>406  </td><td>8     </td><td>930   </td><td>11    </td><td>279   </td><td>4     </td><td>1459  </td><td>14    </td><td>399   </td><td>3     </td><td>1501  </td><td>10    </td><td>1121  </td><td>10    </td></tr>\n",
+       "\t<tr><td>Source: Department of Health                       </td><td>NA   </td><td>NA    </td><td>NA   </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td></tr>\n",
+       "\t<tr><td>NA                                                 </td><td>NA   </td><td>NA    </td><td>NA   </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td></tr>\n",
+       "\t<tr><td>NA                                                 </td><td>NA   </td><td>NA    </td><td>NA   </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td></tr>\n",
+       "\t<tr><td>Table 5.5.1b                                       </td><td>NA   </td><td>NA    </td><td>NA   </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td></tr>\n",
+       "\t<tr><td>VECTOR BORNE DISEASES CASES AND DEATHS BY SEX      </td><td>NA   </td><td>NA    </td><td>NA   </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td></tr>\n",
+       "\t<tr><td>Dengue                                             </td><td>NA   </td><td>NA    </td><td>NA   </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td></tr>\n",
+       "\t<tr><td>2008-2015                                          </td><td>NA   </td><td>NA    </td><td>NA   </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td></tr>\n",
+       "\t<tr><td>NA                                                 </td><td>NA   </td><td>NA    </td><td>NA   </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td></tr>\n",
+       "\t<tr><td>NA                                                 </td><td>2008 </td><td>NA    </td><td>2009 </td><td>NA    </td><td>2010  </td><td>NA    </td><td>2011  </td><td>NA    </td><td>2012  </td><td>NA    </td><td>2013  </td><td>NA    </td><td>2014  </td><td>NA    </td><td>2015  </td><td>NA    </td></tr>\n",
+       "\t<tr><td>NA                                                 </td><td>Cases</td><td>Deaths</td><td>Cases</td><td>Deaths</td><td>Cases </td><td>Deaths</td><td>Cases </td><td>Deaths</td><td>Cases </td><td>Deaths</td><td>Cases </td><td>Deaths</td><td>Cases </td><td>Deaths</td><td>Cases </td><td>Deaths</td></tr>\n",
+       "\t<tr><td>NA                                                 </td><td>NA   </td><td>NA    </td><td>NA   </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td></tr>\n",
+       "\t<tr><td>Philippines                                        </td><td>46389</td><td>415   </td><td>57818</td><td>548   </td><td>173029</td><td>1057  </td><td>125975</td><td>654   </td><td>187031</td><td>921   </td><td>204906</td><td>660   </td><td>121580</td><td>465   </td><td>213930</td><td>647   </td></tr>\n",
+       "\t<tr><td>NA                                                 </td><td>NA   </td><td>NA    </td><td>NA   </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td></tr>\n",
+       "\t<tr><td>Female                                             </td><td>21968</td><td>232   </td><td>27439</td><td>288   </td><td>83302 </td><td>573   </td><td>58853 </td><td>370   </td><td>88243 </td><td>519   </td><td>95763 </td><td>339   </td><td>57166 </td><td>242   </td><td>100953</td><td>366   </td></tr>\n",
+       "\t<tr><td>Male                                               </td><td>24421</td><td>183   </td><td>30379</td><td>260   </td><td>89727 </td><td>484   </td><td>67122 </td><td>284   </td><td>98788 </td><td>402   </td><td>109143</td><td>321   </td><td>64414 </td><td>223   </td><td>112977</td><td>281   </td></tr>\n",
+       "\t<tr><td>Source: Department of Health                       </td><td>NA   </td><td>NA    </td><td>NA   </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td></tr>\n",
+       "\t<tr><td>NA                                                 </td><td>NA   </td><td>NA    </td><td>NA   </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td></tr>\n",
+       "\t<tr><td>NA                                                 </td><td>NA   </td><td>NA    </td><td>NA   </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td></tr>\n",
+       "\t<tr><td>Table 5.5.1c                                       </td><td>NA   </td><td>NA    </td><td>NA   </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td></tr>\n",
+       "\t<tr><td>VECTOR BORNE DISEASES CASES AND DEATHS BY AGE GROUP</td><td>NA   </td><td>NA    </td><td>NA   </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td></tr>\n",
+       "\t<tr><td>Dengue                                             </td><td>NA   </td><td>NA    </td><td>NA   </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td></tr>\n",
+       "\t<tr><td>2008-2015                                          </td><td>NA   </td><td>NA    </td><td>NA   </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td></tr>\n",
+       "\t<tr><td>NA                                                 </td><td>NA   </td><td>NA    </td><td>NA   </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td></tr>\n",
+       "\t<tr><td>NA                                                 </td><td>2008 </td><td>NA    </td><td>2009 </td><td>NA    </td><td>2010  </td><td>NA    </td><td>2011  </td><td>NA    </td><td>2012  </td><td>NA    </td><td>2013  </td><td>NA    </td><td>2014  </td><td>NA    </td><td>2015  </td><td>NA    </td></tr>\n",
+       "\t<tr><td>NA                                                 </td><td>Cases</td><td>Deaths</td><td>Cases</td><td>Deaths</td><td>Cases </td><td>Deaths</td><td>Cases </td><td>Deaths</td><td>Cases </td><td>Deaths</td><td>Cases </td><td>Deaths</td><td>Cases </td><td>Deaths</td><td>Cases </td><td>Deaths</td></tr>\n",
+       "\t<tr><td>NA                                                 </td><td>NA   </td><td>NA    </td><td>NA   </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td></tr>\n",
+       "\t<tr><td>Philippines                                        </td><td>46389</td><td>415   </td><td>57818</td><td>548   </td><td>173029</td><td>1057  </td><td>125975</td><td>654   </td><td>187031</td><td>921   </td><td>204906</td><td>660   </td><td>121580</td><td>465   </td><td>213930</td><td>647   </td></tr>\n",
+       "\t<tr><td>NA                                                 </td><td>NA   </td><td>NA    </td><td>NA   </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td></tr>\n",
+       "\t<tr><td><span style=white-space:pre-wrap>&lt;1                                                 </span></td><td><span style=white-space:pre-wrap>-    </span></td><td><span style=white-space:pre-wrap>-     </span></td><td><span style=white-space:pre-wrap>109  </span></td><td><span style=white-space:pre-wrap>4     </span></td><td><span style=white-space:pre-wrap>130   </span></td><td><span style=white-space:pre-wrap>0     </span></td><td><span style=white-space:pre-wrap>1     </span></td><td><span style=white-space:pre-wrap>0     </span></td><td><span style=white-space:pre-wrap>4017  </span></td><td><span style=white-space:pre-wrap>39    </span></td><td><span style=white-space:pre-wrap>4124  </span></td><td><span style=white-space:pre-wrap>26    </span></td><td><span style=white-space:pre-wrap>2870  </span></td><td><span style=white-space:pre-wrap>14    </span></td><td><span style=white-space:pre-wrap>4304  </span></td><td><span style=white-space:pre-wrap>22    </span></td></tr>\n",
+       "\t<tr><td>1–4                                                </td><td>1298 </td><td>18    </td><td>1839 </td><td>23    </td><td>4932  </td><td>58    </td><td>3087  </td><td>24    </td><td>24824 </td><td>255   </td><td>26225 </td><td>149   </td><td>14956 </td><td>108   </td><td>23428 </td><td>173   </td></tr>\n",
+       "\t<tr><td>5–14                                               </td><td>6141 </td><td>112   </td><td>8001 </td><td>155   </td><td>24548 </td><td>281   </td><td>17413 </td><td>165   </td><td>80565 </td><td>458   </td><td>83525 </td><td>337   </td><td>47513 </td><td>203   </td><td>81803 </td><td>306   </td></tr>\n",
+       "\t<tr><td>15–24                                              </td><td>21406</td><td>225   </td><td>25697</td><td>270   </td><td>77119 </td><td>549   </td><td>54585 </td><td>310   </td><td>49557 </td><td>95    </td><td>54442 </td><td>77    </td><td>32559 </td><td>55    </td><td>59890 </td><td>60    </td></tr>\n",
+       "\t<tr><td>25–39                                              </td><td>11792</td><td>38    </td><td>14647</td><td>44    </td><td>44505 </td><td>93    </td><td>33250 </td><td>70    </td><td>19009 </td><td>38    </td><td>23512 </td><td>31    </td><td>14590 </td><td>36    </td><td>27664 </td><td>41    </td></tr>\n",
+       "\t<tr><td>40–64                                              </td><td>4144 </td><td>13    </td><td>5297 </td><td>29    </td><td>15338 </td><td>39    </td><td>12097 </td><td>42    </td><td>7265  </td><td>23    </td><td>10775 </td><td>22    </td><td>7184  </td><td>38    </td><td>13476 </td><td>33    </td></tr>\n",
+       "\t<tr><td><span style=white-space:pre-wrap>65 &amp; up                                            </span></td><td>1393 </td><td><span style=white-space:pre-wrap>7     </span></td><td>1879 </td><td><span style=white-space:pre-wrap>20    </span></td><td><span style=white-space:pre-wrap>5491  </span></td><td><span style=white-space:pre-wrap>30    </span></td><td><span style=white-space:pre-wrap>4638  </span></td><td><span style=white-space:pre-wrap>34    </span></td><td><span style=white-space:pre-wrap>1320  </span></td><td><span style=white-space:pre-wrap>5     </span></td><td><span style=white-space:pre-wrap>2076  </span></td><td><span style=white-space:pre-wrap>17    </span></td><td><span style=white-space:pre-wrap>1670  </span></td><td><span style=white-space:pre-wrap>11    </span></td><td><span style=white-space:pre-wrap>2967  </span></td><td><span style=white-space:pre-wrap>12    </span></td></tr>\n",
+       "\t<tr><td>Unspecified                                        </td><td>215  </td><td>2     </td><td>349  </td><td>3     </td><td>966   </td><td>7     </td><td>904   </td><td>9     </td><td>474   </td><td>8     </td><td>227   </td><td>1     </td><td>238   </td><td>0     </td><td>398   </td><td>0     </td></tr>\n",
+       "\t<tr><td>Source: Department of Health                       </td><td>NA   </td><td>NA    </td><td>NA   </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td></tr>\n",
+       "</tbody>\n",
+       "</table>\n"
+      ],
+      "text/latex": [
+       "A tibble: 55 × 17\n",
+       "\\begin{tabular}{lllllllllllllllll}\n",
+       " Philippines & 46389 & 415 & 57818 & 548 & 173029 & 1057 & 125975 & 654 & 187031 & 921 & 204906 & 660 & 121580 & 465 & 213930 & 647\\\\\n",
+       " <chr> & <chr> & <chr> & <chr> & <chr> & <chr> & <chr> & <chr> & <chr> & <chr> & <chr> & <chr> & <chr> & <chr> & <chr> & <chr> & <chr>\\\\\n",
+       "\\hline\n",
+       "\t NA                                                  & NA    & NA     & NA    & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA    \\\\\n",
+       "\t NCR                                                 & 13975 & 90     & 12763 & 122    & 23644  & 133    & 28040  & 161    & 35796  & 143    & 23437  & 52     & 8929   & 44     & 26804  & 115   \\\\\n",
+       "\t CAR                                                 & 590   & 2      & 1849  & 6      & 6297   & 13     & 4695   & 19     & 5751   & 12     & 8718   & 17     & 2582   & 7      & 10403  & 11    \\\\\n",
+       "\t I                                                   & 3375  & 29     & 2793  & 26     & 5580   & 41     & 14389  & 73     & 9619   & 42     & 16564  & 46     & 6985   & 18     & 17605  & 41    \\\\\n",
+       "\t II                                                  & 1210  & 13     & 2226  & 38     & 6105   & 37     & 9673   & 45     & 7886   & 30     & 15946  & 27     & 3854   & 17     & 13855  & 17    \\\\\n",
+       "\t III                                                 & 7141  & 58     & 2932  & 34     & 10710  & 67     & 26878  & 59     & 28360  & 61     & 20615  & 34     & 14471  & 19     & 37047  & 49    \\\\\n",
+       "\t IVA                                                 & 4159  & 31     & 7215  & 42     & 24851  & 106    & 17567  & 107    & 29843  & 121    & 30219  & 64     & 15111  & 30     & 36033  & 109   \\\\\n",
+       "\t IVB                                                 & 273   & 4      & 171   & 2      & 2242   & 26     & 1580   & 9      & 2346   & 12     & 5108   & 14     & 2591   & 15     & 3632   & 10    \\\\\n",
+       "\t V                                                   & 650   & 7      & 1213  & 3      & 3327   & 19     & 1715   & 7      & 3777   & 13     & 2973   & 15     & 2329   & 11     & 2014   & 8     \\\\\n",
+       "\t VI                                                  & 2246  & 20     & 5241  & 84     & 27400  & 137    & 3206   & 39     & 11880  & 97     & 22461  & 69     & 8489   & 27     & 10353  & 26    \\\\\n",
+       "\t VII                                                 & 3424  & 96     & 7070  & 79     & 15362  & 116    & 5373   & 26     & 19193  & 89     & 15853  & 57     & 6566   & 26     & 14423  & 87    \\\\\n",
+       "\t VIII                                                & 905   & 11     & 1101  & 13     & 12022  & 93     & 867    & 6      & 1669   & 12     & 3750   & 12     & 5239   & 21     & 2011   & 5     \\\\\n",
+       "\t IX                                                  & 2172  & 8      & 1630  & 9      & 4917   & 46     & 1592   & 23     & 5498   & 42     & 5959   & 42     & 6755   & 28     & 6982   & 22    \\\\\n",
+       "\t X                                                   & 1073  & 14     & 2239  & 26     & 7414   & 58     & 2000   & 8      & 6550   & 48     & 5361   & 49     & 11752  & 65     & 10303  & 44    \\\\\n",
+       "\t XI                                                  & 3168  & 18     & 4179  & 35     & 9165   & 86     & 4178   & 37     & 10107  & 109    & 10886  & 62     & 8561   & 44     & 5057   & 21    \\\\\n",
+       "\t XII                                                 & 1102  & 6      & 3242  & 10     & 9937   & 55     & 2735   & 26     & 4573   & 53     & 13064  & 68     & 7247   & 40     & 9586   & 31    \\\\\n",
+       "\t Caraga                                              & 663   & 5      & 1548  & 11     & 3126   & 13     & 1208   & 5      & 2724   & 23     & 3593   & 29     & 8618   & 43     & 6701   & 41    \\\\\n",
+       "\t ARMM                                                & 263   & 3      & 406   & 8      & 930    & 11     & 279    & 4      & 1459   & 14     & 399    & 3      & 1501   & 10     & 1121   & 10    \\\\\n",
+       "\t Source: Department of Health                        & NA    & NA     & NA    & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA    \\\\\n",
+       "\t NA                                                  & NA    & NA     & NA    & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA    \\\\\n",
+       "\t NA                                                  & NA    & NA     & NA    & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA    \\\\\n",
+       "\t Table 5.5.1b                                        & NA    & NA     & NA    & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA    \\\\\n",
+       "\t VECTOR BORNE DISEASES CASES AND DEATHS BY SEX       & NA    & NA     & NA    & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA    \\\\\n",
+       "\t Dengue                                              & NA    & NA     & NA    & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA    \\\\\n",
+       "\t 2008-2015                                           & NA    & NA     & NA    & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA    \\\\\n",
+       "\t NA                                                  & NA    & NA     & NA    & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA    \\\\\n",
+       "\t NA                                                  & 2008  & NA     & 2009  & NA     & 2010   & NA     & 2011   & NA     & 2012   & NA     & 2013   & NA     & 2014   & NA     & 2015   & NA    \\\\\n",
+       "\t NA                                                  & Cases & Deaths & Cases & Deaths & Cases  & Deaths & Cases  & Deaths & Cases  & Deaths & Cases  & Deaths & Cases  & Deaths & Cases  & Deaths\\\\\n",
+       "\t NA                                                  & NA    & NA     & NA    & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA    \\\\\n",
+       "\t Philippines                                         & 46389 & 415    & 57818 & 548    & 173029 & 1057   & 125975 & 654    & 187031 & 921    & 204906 & 660    & 121580 & 465    & 213930 & 647   \\\\\n",
+       "\t NA                                                  & NA    & NA     & NA    & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA    \\\\\n",
+       "\t Female                                              & 21968 & 232    & 27439 & 288    & 83302  & 573    & 58853  & 370    & 88243  & 519    & 95763  & 339    & 57166  & 242    & 100953 & 366   \\\\\n",
+       "\t Male                                                & 24421 & 183    & 30379 & 260    & 89727  & 484    & 67122  & 284    & 98788  & 402    & 109143 & 321    & 64414  & 223    & 112977 & 281   \\\\\n",
+       "\t Source: Department of Health                        & NA    & NA     & NA    & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA    \\\\\n",
+       "\t NA                                                  & NA    & NA     & NA    & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA    \\\\\n",
+       "\t NA                                                  & NA    & NA     & NA    & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA    \\\\\n",
+       "\t Table 5.5.1c                                        & NA    & NA     & NA    & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA    \\\\\n",
+       "\t VECTOR BORNE DISEASES CASES AND DEATHS BY AGE GROUP & NA    & NA     & NA    & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA    \\\\\n",
+       "\t Dengue                                              & NA    & NA     & NA    & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA    \\\\\n",
+       "\t 2008-2015                                           & NA    & NA     & NA    & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA    \\\\\n",
+       "\t NA                                                  & NA    & NA     & NA    & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA    \\\\\n",
+       "\t NA                                                  & 2008  & NA     & 2009  & NA     & 2010   & NA     & 2011   & NA     & 2012   & NA     & 2013   & NA     & 2014   & NA     & 2015   & NA    \\\\\n",
+       "\t NA                                                  & Cases & Deaths & Cases & Deaths & Cases  & Deaths & Cases  & Deaths & Cases  & Deaths & Cases  & Deaths & Cases  & Deaths & Cases  & Deaths\\\\\n",
+       "\t NA                                                  & NA    & NA     & NA    & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA    \\\\\n",
+       "\t Philippines                                         & 46389 & 415    & 57818 & 548    & 173029 & 1057   & 125975 & 654    & 187031 & 921    & 204906 & 660    & 121580 & 465    & 213930 & 647   \\\\\n",
+       "\t NA                                                  & NA    & NA     & NA    & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA    \\\\\n",
+       "\t <1                                                  & -     & -      & 109   & 4      & 130    & 0      & 1      & 0      & 4017   & 39     & 4124   & 26     & 2870   & 14     & 4304   & 22    \\\\\n",
+       "\t 1–4                                                 & 1298  & 18     & 1839  & 23     & 4932   & 58     & 3087   & 24     & 24824  & 255    & 26225  & 149    & 14956  & 108    & 23428  & 173   \\\\\n",
+       "\t 5–14                                                & 6141  & 112    & 8001  & 155    & 24548  & 281    & 17413  & 165    & 80565  & 458    & 83525  & 337    & 47513  & 203    & 81803  & 306   \\\\\n",
+       "\t 15–24                                               & 21406 & 225    & 25697 & 270    & 77119  & 549    & 54585  & 310    & 49557  & 95     & 54442  & 77     & 32559  & 55     & 59890  & 60    \\\\\n",
+       "\t 25–39                                               & 11792 & 38     & 14647 & 44     & 44505  & 93     & 33250  & 70     & 19009  & 38     & 23512  & 31     & 14590  & 36     & 27664  & 41    \\\\\n",
+       "\t 40–64                                               & 4144  & 13     & 5297  & 29     & 15338  & 39     & 12097  & 42     & 7265   & 23     & 10775  & 22     & 7184   & 38     & 13476  & 33    \\\\\n",
+       "\t 65 \\& up                                             & 1393  & 7      & 1879  & 20     & 5491   & 30     & 4638   & 34     & 1320   & 5      & 2076   & 17     & 1670   & 11     & 2967   & 12    \\\\\n",
+       "\t Unspecified                                         & 215   & 2      & 349   & 3      & 966    & 7      & 904    & 9      & 474    & 8      & 227    & 1      & 238    & 0      & 398    & 0     \\\\\n",
+       "\t Source: Department of Health                        & NA    & NA     & NA    & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA    \\\\\n",
+       "\\end{tabular}\n"
+      ],
+      "text/markdown": [
+       "\n",
+       "A tibble: 55 × 17\n",
+       "\n",
+       "| Philippines &lt;chr&gt; | 46389 &lt;chr&gt; | 415 &lt;chr&gt; | 57818 &lt;chr&gt; | 548 &lt;chr&gt; | 173029 &lt;chr&gt; | 1057 &lt;chr&gt; | 125975 &lt;chr&gt; | 654 &lt;chr&gt; | 187031 &lt;chr&gt; | 921 &lt;chr&gt; | 204906 &lt;chr&gt; | 660 &lt;chr&gt; | 121580 &lt;chr&gt; | 465 &lt;chr&gt; | 213930 &lt;chr&gt; | 647 &lt;chr&gt; |\n",
+       "|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|\n",
+       "| NA                                                  | NA    | NA     | NA    | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     |\n",
+       "| NCR                                                 | 13975 | 90     | 12763 | 122    | 23644  | 133    | 28040  | 161    | 35796  | 143    | 23437  | 52     | 8929   | 44     | 26804  | 115    |\n",
+       "| CAR                                                 | 590   | 2      | 1849  | 6      | 6297   | 13     | 4695   | 19     | 5751   | 12     | 8718   | 17     | 2582   | 7      | 10403  | 11     |\n",
+       "| I                                                   | 3375  | 29     | 2793  | 26     | 5580   | 41     | 14389  | 73     | 9619   | 42     | 16564  | 46     | 6985   | 18     | 17605  | 41     |\n",
+       "| II                                                  | 1210  | 13     | 2226  | 38     | 6105   | 37     | 9673   | 45     | 7886   | 30     | 15946  | 27     | 3854   | 17     | 13855  | 17     |\n",
+       "| III                                                 | 7141  | 58     | 2932  | 34     | 10710  | 67     | 26878  | 59     | 28360  | 61     | 20615  | 34     | 14471  | 19     | 37047  | 49     |\n",
+       "| IVA                                                 | 4159  | 31     | 7215  | 42     | 24851  | 106    | 17567  | 107    | 29843  | 121    | 30219  | 64     | 15111  | 30     | 36033  | 109    |\n",
+       "| IVB                                                 | 273   | 4      | 171   | 2      | 2242   | 26     | 1580   | 9      | 2346   | 12     | 5108   | 14     | 2591   | 15     | 3632   | 10     |\n",
+       "| V                                                   | 650   | 7      | 1213  | 3      | 3327   | 19     | 1715   | 7      | 3777   | 13     | 2973   | 15     | 2329   | 11     | 2014   | 8      |\n",
+       "| VI                                                  | 2246  | 20     | 5241  | 84     | 27400  | 137    | 3206   | 39     | 11880  | 97     | 22461  | 69     | 8489   | 27     | 10353  | 26     |\n",
+       "| VII                                                 | 3424  | 96     | 7070  | 79     | 15362  | 116    | 5373   | 26     | 19193  | 89     | 15853  | 57     | 6566   | 26     | 14423  | 87     |\n",
+       "| VIII                                                | 905   | 11     | 1101  | 13     | 12022  | 93     | 867    | 6      | 1669   | 12     | 3750   | 12     | 5239   | 21     | 2011   | 5      |\n",
+       "| IX                                                  | 2172  | 8      | 1630  | 9      | 4917   | 46     | 1592   | 23     | 5498   | 42     | 5959   | 42     | 6755   | 28     | 6982   | 22     |\n",
+       "| X                                                   | 1073  | 14     | 2239  | 26     | 7414   | 58     | 2000   | 8      | 6550   | 48     | 5361   | 49     | 11752  | 65     | 10303  | 44     |\n",
+       "| XI                                                  | 3168  | 18     | 4179  | 35     | 9165   | 86     | 4178   | 37     | 10107  | 109    | 10886  | 62     | 8561   | 44     | 5057   | 21     |\n",
+       "| XII                                                 | 1102  | 6      | 3242  | 10     | 9937   | 55     | 2735   | 26     | 4573   | 53     | 13064  | 68     | 7247   | 40     | 9586   | 31     |\n",
+       "| Caraga                                              | 663   | 5      | 1548  | 11     | 3126   | 13     | 1208   | 5      | 2724   | 23     | 3593   | 29     | 8618   | 43     | 6701   | 41     |\n",
+       "| ARMM                                                | 263   | 3      | 406   | 8      | 930    | 11     | 279    | 4      | 1459   | 14     | 399    | 3      | 1501   | 10     | 1121   | 10     |\n",
+       "| Source: Department of Health                        | NA    | NA     | NA    | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     |\n",
+       "| NA                                                  | NA    | NA     | NA    | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     |\n",
+       "| NA                                                  | NA    | NA     | NA    | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     |\n",
+       "| Table 5.5.1b                                        | NA    | NA     | NA    | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     |\n",
+       "| VECTOR BORNE DISEASES CASES AND DEATHS BY SEX       | NA    | NA     | NA    | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     |\n",
+       "| Dengue                                              | NA    | NA     | NA    | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     |\n",
+       "| 2008-2015                                           | NA    | NA     | NA    | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     |\n",
+       "| NA                                                  | NA    | NA     | NA    | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     |\n",
+       "| NA                                                  | 2008  | NA     | 2009  | NA     | 2010   | NA     | 2011   | NA     | 2012   | NA     | 2013   | NA     | 2014   | NA     | 2015   | NA     |\n",
+       "| NA                                                  | Cases | Deaths | Cases | Deaths | Cases  | Deaths | Cases  | Deaths | Cases  | Deaths | Cases  | Deaths | Cases  | Deaths | Cases  | Deaths |\n",
+       "| NA                                                  | NA    | NA     | NA    | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     |\n",
+       "| Philippines                                         | 46389 | 415    | 57818 | 548    | 173029 | 1057   | 125975 | 654    | 187031 | 921    | 204906 | 660    | 121580 | 465    | 213930 | 647    |\n",
+       "| NA                                                  | NA    | NA     | NA    | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     |\n",
+       "| Female                                              | 21968 | 232    | 27439 | 288    | 83302  | 573    | 58853  | 370    | 88243  | 519    | 95763  | 339    | 57166  | 242    | 100953 | 366    |\n",
+       "| Male                                                | 24421 | 183    | 30379 | 260    | 89727  | 484    | 67122  | 284    | 98788  | 402    | 109143 | 321    | 64414  | 223    | 112977 | 281    |\n",
+       "| Source: Department of Health                        | NA    | NA     | NA    | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     |\n",
+       "| NA                                                  | NA    | NA     | NA    | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     |\n",
+       "| NA                                                  | NA    | NA     | NA    | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     |\n",
+       "| Table 5.5.1c                                        | NA    | NA     | NA    | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     |\n",
+       "| VECTOR BORNE DISEASES CASES AND DEATHS BY AGE GROUP | NA    | NA     | NA    | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     |\n",
+       "| Dengue                                              | NA    | NA     | NA    | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     |\n",
+       "| 2008-2015                                           | NA    | NA     | NA    | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     |\n",
+       "| NA                                                  | NA    | NA     | NA    | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     |\n",
+       "| NA                                                  | 2008  | NA     | 2009  | NA     | 2010   | NA     | 2011   | NA     | 2012   | NA     | 2013   | NA     | 2014   | NA     | 2015   | NA     |\n",
+       "| NA                                                  | Cases | Deaths | Cases | Deaths | Cases  | Deaths | Cases  | Deaths | Cases  | Deaths | Cases  | Deaths | Cases  | Deaths | Cases  | Deaths |\n",
+       "| NA                                                  | NA    | NA     | NA    | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     |\n",
+       "| Philippines                                         | 46389 | 415    | 57818 | 548    | 173029 | 1057   | 125975 | 654    | 187031 | 921    | 204906 | 660    | 121580 | 465    | 213930 | 647    |\n",
+       "| NA                                                  | NA    | NA     | NA    | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     |\n",
+       "| &lt;1                                                  | -     | -      | 109   | 4      | 130    | 0      | 1      | 0      | 4017   | 39     | 4124   | 26     | 2870   | 14     | 4304   | 22     |\n",
+       "| 1–4                                                 | 1298  | 18     | 1839  | 23     | 4932   | 58     | 3087   | 24     | 24824  | 255    | 26225  | 149    | 14956  | 108    | 23428  | 173    |\n",
+       "| 5–14                                                | 6141  | 112    | 8001  | 155    | 24548  | 281    | 17413  | 165    | 80565  | 458    | 83525  | 337    | 47513  | 203    | 81803  | 306    |\n",
+       "| 15–24                                               | 21406 | 225    | 25697 | 270    | 77119  | 549    | 54585  | 310    | 49557  | 95     | 54442  | 77     | 32559  | 55     | 59890  | 60     |\n",
+       "| 25–39                                               | 11792 | 38     | 14647 | 44     | 44505  | 93     | 33250  | 70     | 19009  | 38     | 23512  | 31     | 14590  | 36     | 27664  | 41     |\n",
+       "| 40–64                                               | 4144  | 13     | 5297  | 29     | 15338  | 39     | 12097  | 42     | 7265   | 23     | 10775  | 22     | 7184   | 38     | 13476  | 33     |\n",
+       "| 65 &amp; up                                             | 1393  | 7      | 1879  | 20     | 5491   | 30     | 4638   | 34     | 1320   | 5      | 2076   | 17     | 1670   | 11     | 2967   | 12     |\n",
+       "| Unspecified                                         | 215   | 2      | 349   | 3      | 966    | 7      | 904    | 9      | 474    | 8      | 227    | 1      | 238    | 0      | 398    | 0      |\n",
+       "| Source: Department of Health                        | NA    | NA     | NA    | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     |\n",
+       "\n"
+      ],
+      "text/plain": [
+       "   Philippines                                         46389 415    57818\n",
+       "1  NA                                                  NA    NA     NA   \n",
+       "2  NCR                                                 13975 90     12763\n",
+       "3  CAR                                                 590   2      1849 \n",
+       "4  I                                                   3375  29     2793 \n",
+       "5  II                                                  1210  13     2226 \n",
+       "6  III                                                 7141  58     2932 \n",
+       "7  IVA                                                 4159  31     7215 \n",
+       "8  IVB                                                 273   4      171  \n",
+       "9  V                                                   650   7      1213 \n",
+       "10 VI                                                  2246  20     5241 \n",
+       "11 VII                                                 3424  96     7070 \n",
+       "12 VIII                                                905   11     1101 \n",
+       "13 IX                                                  2172  8      1630 \n",
+       "14 X                                                   1073  14     2239 \n",
+       "15 XI                                                  3168  18     4179 \n",
+       "16 XII                                                 1102  6      3242 \n",
+       "17 Caraga                                              663   5      1548 \n",
+       "18 ARMM                                                263   3      406  \n",
+       "19 Source: Department of Health                        NA    NA     NA   \n",
+       "20 NA                                                  NA    NA     NA   \n",
+       "21 NA                                                  NA    NA     NA   \n",
+       "22 Table 5.5.1b                                        NA    NA     NA   \n",
+       "23 VECTOR BORNE DISEASES CASES AND DEATHS BY SEX       NA    NA     NA   \n",
+       "24 Dengue                                              NA    NA     NA   \n",
+       "25 2008-2015                                           NA    NA     NA   \n",
+       "26 NA                                                  NA    NA     NA   \n",
+       "27 NA                                                  2008  NA     2009 \n",
+       "28 NA                                                  Cases Deaths Cases\n",
+       "29 NA                                                  NA    NA     NA   \n",
+       "30 Philippines                                         46389 415    57818\n",
+       "31 NA                                                  NA    NA     NA   \n",
+       "32 Female                                              21968 232    27439\n",
+       "33 Male                                                24421 183    30379\n",
+       "34 Source: Department of Health                        NA    NA     NA   \n",
+       "35 NA                                                  NA    NA     NA   \n",
+       "36 NA                                                  NA    NA     NA   \n",
+       "37 Table 5.5.1c                                        NA    NA     NA   \n",
+       "38 VECTOR BORNE DISEASES CASES AND DEATHS BY AGE GROUP NA    NA     NA   \n",
+       "39 Dengue                                              NA    NA     NA   \n",
+       "40 2008-2015                                           NA    NA     NA   \n",
+       "41 NA                                                  NA    NA     NA   \n",
+       "42 NA                                                  2008  NA     2009 \n",
+       "43 NA                                                  Cases Deaths Cases\n",
+       "44 NA                                                  NA    NA     NA   \n",
+       "45 Philippines                                         46389 415    57818\n",
+       "46 NA                                                  NA    NA     NA   \n",
+       "47 <1                                                  -     -      109  \n",
+       "48 1–4                                                 1298  18     1839 \n",
+       "49 5–14                                                6141  112    8001 \n",
+       "50 15–24                                               21406 225    25697\n",
+       "51 25–39                                               11792 38     14647\n",
+       "52 40–64                                               4144  13     5297 \n",
+       "53 65 & up                                             1393  7      1879 \n",
+       "54 Unspecified                                         215   2      349  \n",
+       "55 Source: Department of Health                        NA    NA     NA   \n",
+       "   548    173029 1057   125975 654    187031 921    204906 660    121580 465   \n",
+       "1  NA     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA    \n",
+       "2  122    23644  133    28040  161    35796  143    23437  52     8929   44    \n",
+       "3  6      6297   13     4695   19     5751   12     8718   17     2582   7     \n",
+       "4  26     5580   41     14389  73     9619   42     16564  46     6985   18    \n",
+       "5  38     6105   37     9673   45     7886   30     15946  27     3854   17    \n",
+       "6  34     10710  67     26878  59     28360  61     20615  34     14471  19    \n",
+       "7  42     24851  106    17567  107    29843  121    30219  64     15111  30    \n",
+       "8  2      2242   26     1580   9      2346   12     5108   14     2591   15    \n",
+       "9  3      3327   19     1715   7      3777   13     2973   15     2329   11    \n",
+       "10 84     27400  137    3206   39     11880  97     22461  69     8489   27    \n",
+       "11 79     15362  116    5373   26     19193  89     15853  57     6566   26    \n",
+       "12 13     12022  93     867    6      1669   12     3750   12     5239   21    \n",
+       "13 9      4917   46     1592   23     5498   42     5959   42     6755   28    \n",
+       "14 26     7414   58     2000   8      6550   48     5361   49     11752  65    \n",
+       "15 35     9165   86     4178   37     10107  109    10886  62     8561   44    \n",
+       "16 10     9937   55     2735   26     4573   53     13064  68     7247   40    \n",
+       "17 11     3126   13     1208   5      2724   23     3593   29     8618   43    \n",
+       "18 8      930    11     279    4      1459   14     399    3      1501   10    \n",
+       "19 NA     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA    \n",
+       "20 NA     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA    \n",
+       "21 NA     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA    \n",
+       "22 NA     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA    \n",
+       "23 NA     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA    \n",
+       "24 NA     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA    \n",
+       "25 NA     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA    \n",
+       "26 NA     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA    \n",
+       "27 NA     2010   NA     2011   NA     2012   NA     2013   NA     2014   NA    \n",
+       "28 Deaths Cases  Deaths Cases  Deaths Cases  Deaths Cases  Deaths Cases  Deaths\n",
+       "29 NA     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA    \n",
+       "30 548    173029 1057   125975 654    187031 921    204906 660    121580 465   \n",
+       "31 NA     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA    \n",
+       "32 288    83302  573    58853  370    88243  519    95763  339    57166  242   \n",
+       "33 260    89727  484    67122  284    98788  402    109143 321    64414  223   \n",
+       "34 NA     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA    \n",
+       "35 NA     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA    \n",
+       "36 NA     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA    \n",
+       "37 NA     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA    \n",
+       "38 NA     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA    \n",
+       "39 NA     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA    \n",
+       "40 NA     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA    \n",
+       "41 NA     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA    \n",
+       "42 NA     2010   NA     2011   NA     2012   NA     2013   NA     2014   NA    \n",
+       "43 Deaths Cases  Deaths Cases  Deaths Cases  Deaths Cases  Deaths Cases  Deaths\n",
+       "44 NA     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA    \n",
+       "45 548    173029 1057   125975 654    187031 921    204906 660    121580 465   \n",
+       "46 NA     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA    \n",
+       "47 4      130    0      1      0      4017   39     4124   26     2870   14    \n",
+       "48 23     4932   58     3087   24     24824  255    26225  149    14956  108   \n",
+       "49 155    24548  281    17413  165    80565  458    83525  337    47513  203   \n",
+       "50 270    77119  549    54585  310    49557  95     54442  77     32559  55    \n",
+       "51 44     44505  93     33250  70     19009  38     23512  31     14590  36    \n",
+       "52 29     15338  39     12097  42     7265   23     10775  22     7184   38    \n",
+       "53 20     5491   30     4638   34     1320   5      2076   17     1670   11    \n",
+       "54 3      966    7      904    9      474    8      227    1      238    0     \n",
+       "55 NA     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA    \n",
+       "   213930 647   \n",
+       "1  NA     NA    \n",
+       "2  26804  115   \n",
+       "3  10403  11    \n",
+       "4  17605  41    \n",
+       "5  13855  17    \n",
+       "6  37047  49    \n",
+       "7  36033  109   \n",
+       "8  3632   10    \n",
+       "9  2014   8     \n",
+       "10 10353  26    \n",
+       "11 14423  87    \n",
+       "12 2011   5     \n",
+       "13 6982   22    \n",
+       "14 10303  44    \n",
+       "15 5057   21    \n",
+       "16 9586   31    \n",
+       "17 6701   41    \n",
+       "18 1121   10    \n",
+       "19 NA     NA    \n",
+       "20 NA     NA    \n",
+       "21 NA     NA    \n",
+       "22 NA     NA    \n",
+       "23 NA     NA    \n",
+       "24 NA     NA    \n",
+       "25 NA     NA    \n",
+       "26 NA     NA    \n",
+       "27 2015   NA    \n",
+       "28 Cases  Deaths\n",
+       "29 NA     NA    \n",
+       "30 213930 647   \n",
+       "31 NA     NA    \n",
+       "32 100953 366   \n",
+       "33 112977 281   \n",
+       "34 NA     NA    \n",
+       "35 NA     NA    \n",
+       "36 NA     NA    \n",
+       "37 NA     NA    \n",
+       "38 NA     NA    \n",
+       "39 NA     NA    \n",
+       "40 NA     NA    \n",
+       "41 NA     NA    \n",
+       "42 2015   NA    \n",
+       "43 Cases  Deaths\n",
+       "44 NA     NA    \n",
+       "45 213930 647   \n",
+       "46 NA     NA    \n",
+       "47 4304   22    \n",
+       "48 23428  173   \n",
+       "49 81803  306   \n",
+       "50 59890  60    \n",
+       "51 27664  41    \n",
+       "52 13476  33    \n",
+       "53 2967   12    \n",
+       "54 398    0     \n",
+       "55 NA     NA    "
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
     }
    ],
    "source": [
-    "library(readxl)\n",
-    "library(dplyr)\n",
-    "library(tidyr)\n",
-    "library(stringr)\n",
-    "library(readr)\n",
-    "library(ggplot2)\n",
-    "library(patchwork)\n",
-    "\n",
-    "suppressWarnings({\n",
-    "  dengue <- read_excel(\"/kaggle/input/dengue-dataset/Dengue.xlsx\", skip = 8)\n",
-    "})"
+    "dengue"
    ]
   },
   {
    "cell_type": "markdown",
-   "id": "52c9ed17",
+   "id": "0a94241e",
    "metadata": {
     "papermill": {
-     "duration": 0.004005,
-     "end_time": "2025-07-19T00:12:48.248647",
+     "duration": 0.005935,
+     "end_time": "2025-07-19T02:57:53.483418",
      "exception": false,
-     "start_time": "2025-07-19T00:12:48.244642",
+     "start_time": "2025-07-19T02:57:53.477483",
      "status": "completed"
     },
     "tags": []
@@ -89,20 +450,20 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 2,
-   "id": "badad243",
+   "execution_count": 3,
+   "id": "6eaee20f",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2025-07-19T00:12:48.363880Z",
-     "iopub.status.busy": "2025-07-19T00:12:48.260190Z",
-     "iopub.status.idle": "2025-07-19T00:12:48.729989Z",
-     "shell.execute_reply": "2025-07-19T00:12:48.727696Z"
+     "iopub.execute_input": "2025-07-19T02:57:53.499025Z",
+     "iopub.status.busy": "2025-07-19T02:57:53.497203Z",
+     "iopub.status.idle": "2025-07-19T02:57:53.646634Z",
+     "shell.execute_reply": "2025-07-19T02:57:53.644803Z"
     },
     "papermill": {
-     "duration": 0.480646,
-     "end_time": "2025-07-19T00:12:48.733439",
+     "duration": 0.159849,
+     "end_time": "2025-07-19T02:57:53.649097",
      "exception": false,
-     "start_time": "2025-07-19T00:12:48.252793",
+     "start_time": "2025-07-19T02:57:53.489248",
      "status": "completed"
     },
     "tags": []
@@ -487,20 +848,20 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 3,
-   "id": "c2bfd737",
+   "execution_count": 4,
+   "id": "0ddfa10d",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2025-07-19T00:12:48.750386Z",
-     "iopub.status.busy": "2025-07-19T00:12:48.748049Z",
-     "iopub.status.idle": "2025-07-19T00:12:48.859033Z",
-     "shell.execute_reply": "2025-07-19T00:12:48.856850Z"
+     "iopub.execute_input": "2025-07-19T02:57:53.666798Z",
+     "iopub.status.busy": "2025-07-19T02:57:53.665150Z",
+     "iopub.status.idle": "2025-07-19T02:57:53.740456Z",
+     "shell.execute_reply": "2025-07-19T02:57:53.738712Z"
     },
     "papermill": {
-     "duration": 0.122367,
-     "end_time": "2025-07-19T00:12:48.861878",
+     "duration": 0.086777,
+     "end_time": "2025-07-19T02:57:53.742941",
      "exception": false,
-     "start_time": "2025-07-19T00:12:48.739511",
+     "start_time": "2025-07-19T02:57:53.656164",
      "status": "completed"
     },
     "tags": []
@@ -644,20 +1005,20 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 4,
-   "id": "be8cf930",
+   "execution_count": 5,
+   "id": "15fa3bc7",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2025-07-19T00:12:48.877627Z",
-     "iopub.status.busy": "2025-07-19T00:12:48.875714Z",
-     "iopub.status.idle": "2025-07-19T00:12:48.971765Z",
-     "shell.execute_reply": "2025-07-19T00:12:48.969659Z"
+     "iopub.execute_input": "2025-07-19T02:57:53.761459Z",
+     "iopub.status.busy": "2025-07-19T02:57:53.759920Z",
+     "iopub.status.idle": "2025-07-19T02:57:53.836302Z",
+     "shell.execute_reply": "2025-07-19T02:57:53.834318Z"
     },
     "papermill": {
-     "duration": 0.106922,
-     "end_time": "2025-07-19T00:12:48.974426",
+     "duration": 0.088418,
+     "end_time": "2025-07-19T02:57:53.838819",
      "exception": false,
-     "start_time": "2025-07-19T00:12:48.867504",
+     "start_time": "2025-07-19T02:57:53.750401",
      "status": "completed"
     },
     "tags": []
@@ -756,20 +1117,20 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 5,
-   "id": "28552667",
+   "execution_count": 6,
+   "id": "f4397b01",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2025-07-19T00:12:48.990519Z",
-     "iopub.status.busy": "2025-07-19T00:12:48.988602Z",
-     "iopub.status.idle": "2025-07-19T00:12:49.034113Z",
-     "shell.execute_reply": "2025-07-19T00:12:49.031903Z"
+     "iopub.execute_input": "2025-07-19T02:57:53.857416Z",
+     "iopub.status.busy": "2025-07-19T02:57:53.855881Z",
+     "iopub.status.idle": "2025-07-19T02:57:53.892790Z",
+     "shell.execute_reply": "2025-07-19T02:57:53.890992Z"
     },
     "papermill": {
-     "duration": 0.056989,
-     "end_time": "2025-07-19T00:12:49.037152",
+     "duration": 0.049015,
+     "end_time": "2025-07-19T02:57:53.895339",
      "exception": false,
-     "start_time": "2025-07-19T00:12:48.980163",
+     "start_time": "2025-07-19T02:57:53.846324",
      "status": "completed"
     },
     "tags": []
@@ -848,7 +1209,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "9ec5c9c5",
+   "id": "819c60b5",
    "metadata": {
     "execution": {
      "iopub.execute_input": "2025-07-18T20:58:58.558570Z",
@@ -857,10 +1218,10 @@
      "shell.execute_reply": "2025-07-18T20:58:58.571969Z"
     },
     "papermill": {
-     "duration": 0.006125,
-     "end_time": "2025-07-19T00:12:49.049273",
+     "duration": 0.007795,
+     "end_time": "2025-07-19T02:57:53.910798",
      "exception": false,
-     "start_time": "2025-07-19T00:12:49.043148",
+     "start_time": "2025-07-19T02:57:53.903003",
      "status": "completed"
     },
     "tags": []
@@ -871,20 +1232,20 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 6,
-   "id": "2fe99fc0",
+   "execution_count": 7,
+   "id": "c9c06fe6",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2025-07-19T00:12:49.066426Z",
-     "iopub.status.busy": "2025-07-19T00:12:49.064405Z",
-     "iopub.status.idle": "2025-07-19T00:12:49.092532Z",
-     "shell.execute_reply": "2025-07-19T00:12:49.090217Z"
+     "iopub.execute_input": "2025-07-19T02:57:53.930080Z",
+     "iopub.status.busy": "2025-07-19T02:57:53.928528Z",
+     "iopub.status.idle": "2025-07-19T02:57:53.952933Z",
+     "shell.execute_reply": "2025-07-19T02:57:53.950665Z"
     },
     "papermill": {
-     "duration": 0.040095,
-     "end_time": "2025-07-19T00:12:49.095852",
+     "duration": 0.037626,
+     "end_time": "2025-07-19T02:57:53.955981",
      "exception": false,
-     "start_time": "2025-07-19T00:12:49.055757",
+     "start_time": "2025-07-19T02:57:53.918355",
      "status": "completed"
     },
     "tags": []
@@ -913,20 +1274,20 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 7,
-   "id": "1c09d6c5",
+   "execution_count": 8,
+   "id": "260240cc",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2025-07-19T00:12:49.113672Z",
-     "iopub.status.busy": "2025-07-19T00:12:49.111516Z",
-     "iopub.status.idle": "2025-07-19T00:12:49.943863Z",
-     "shell.execute_reply": "2025-07-19T00:12:49.940328Z"
+     "iopub.execute_input": "2025-07-19T02:57:53.977488Z",
+     "iopub.status.busy": "2025-07-19T02:57:53.975163Z",
+     "iopub.status.idle": "2025-07-19T02:57:54.669677Z",
+     "shell.execute_reply": "2025-07-19T02:57:54.666769Z"
     },
     "papermill": {
-     "duration": 0.845606,
-     "end_time": "2025-07-19T00:12:49.947601",
+     "duration": 0.708708,
+     "end_time": "2025-07-19T02:57:54.672991",
      "exception": false,
-     "start_time": "2025-07-19T00:12:49.101995",
+     "start_time": "2025-07-19T02:57:53.964283",
      "status": "completed"
     },
     "tags": []
@@ -964,20 +1325,20 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 8,
-   "id": "6b9744bd",
+   "execution_count": 9,
+   "id": "2ec7935d",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2025-07-19T00:12:49.966837Z",
-     "iopub.status.busy": "2025-07-19T00:12:49.964511Z",
-     "iopub.status.idle": "2025-07-19T00:12:50.328873Z",
-     "shell.execute_reply": "2025-07-19T00:12:50.326055Z"
+     "iopub.execute_input": "2025-07-19T02:57:54.693469Z",
+     "iopub.status.busy": "2025-07-19T02:57:54.691889Z",
+     "iopub.status.idle": "2025-07-19T02:57:55.048914Z",
+     "shell.execute_reply": "2025-07-19T02:57:55.045303Z"
     },
     "papermill": {
-     "duration": 0.377496,
-     "end_time": "2025-07-19T00:12:50.332389",
+     "duration": 0.371601,
+     "end_time": "2025-07-19T02:57:55.053039",
      "exception": false,
-     "start_time": "2025-07-19T00:12:49.954893",
+     "start_time": "2025-07-19T02:57:54.681438",
      "status": "completed"
     },
     "tags": []
@@ -1017,13 +1378,13 @@
   },
   {
    "cell_type": "markdown",
-   "id": "020577e7",
+   "id": "b33161dc",
    "metadata": {
     "papermill": {
-     "duration": 0.007187,
-     "end_time": "2025-07-19T00:12:50.347179",
+     "duration": 0.010675,
+     "end_time": "2025-07-19T02:57:55.073957",
      "exception": false,
-     "start_time": "2025-07-19T00:12:50.339992",
+     "start_time": "2025-07-19T02:57:55.063282",
      "status": "completed"
     },
     "tags": []
@@ -1034,20 +1395,20 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 9,
-   "id": "51f741ac",
+   "execution_count": 10,
+   "id": "04704170",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2025-07-19T00:12:50.365324Z",
-     "iopub.status.busy": "2025-07-19T00:12:50.363678Z",
-     "iopub.status.idle": "2025-07-19T00:12:50.405793Z",
-     "shell.execute_reply": "2025-07-19T00:12:50.403287Z"
+     "iopub.execute_input": "2025-07-19T02:57:55.097601Z",
+     "iopub.status.busy": "2025-07-19T02:57:55.095930Z",
+     "iopub.status.idle": "2025-07-19T02:57:55.143894Z",
+     "shell.execute_reply": "2025-07-19T02:57:55.141561Z"
     },
     "papermill": {
-     "duration": 0.054464,
-     "end_time": "2025-07-19T00:12:50.408746",
+     "duration": 0.063596,
+     "end_time": "2025-07-19T02:57:55.147483",
      "exception": false,
-     "start_time": "2025-07-19T00:12:50.354282",
+     "start_time": "2025-07-19T02:57:55.083887",
      "status": "completed"
     },
     "tags": []
@@ -1172,20 +1533,20 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 10,
-   "id": "aa51c15d",
+   "execution_count": 11,
+   "id": "a2544a27",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2025-07-19T00:12:50.427602Z",
-     "iopub.status.busy": "2025-07-19T00:12:50.425990Z",
-     "iopub.status.idle": "2025-07-19T00:12:50.880570Z",
-     "shell.execute_reply": "2025-07-19T00:12:50.877837Z"
+     "iopub.execute_input": "2025-07-19T02:57:55.173649Z",
+     "iopub.status.busy": "2025-07-19T02:57:55.171599Z",
+     "iopub.status.idle": "2025-07-19T02:57:55.632571Z",
+     "shell.execute_reply": "2025-07-19T02:57:55.629769Z"
     },
     "papermill": {
-     "duration": 0.467597,
-     "end_time": "2025-07-19T00:12:50.883852",
+     "duration": 0.477367,
+     "end_time": "2025-07-19T02:57:55.635659",
      "exception": false,
-     "start_time": "2025-07-19T00:12:50.416255",
+     "start_time": "2025-07-19T02:57:55.158292",
      "status": "completed"
     },
     "tags": []
@@ -1222,20 +1583,20 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 11,
-   "id": "056045aa",
+   "execution_count": 12,
+   "id": "03501c2f",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2025-07-19T00:12:50.904237Z",
-     "iopub.status.busy": "2025-07-19T00:12:50.902729Z",
-     "iopub.status.idle": "2025-07-19T00:12:51.632997Z",
-     "shell.execute_reply": "2025-07-19T00:12:51.629363Z"
+     "iopub.execute_input": "2025-07-19T02:57:55.660920Z",
+     "iopub.status.busy": "2025-07-19T02:57:55.659347Z",
+     "iopub.status.idle": "2025-07-19T02:57:56.282283Z",
+     "shell.execute_reply": "2025-07-19T02:57:56.279455Z"
     },
     "papermill": {
-     "duration": 0.744717,
-     "end_time": "2025-07-19T00:12:51.637006",
+     "duration": 0.639039,
+     "end_time": "2025-07-19T02:57:56.285631",
      "exception": false,
-     "start_time": "2025-07-19T00:12:50.892289",
+     "start_time": "2025-07-19T02:57:55.646592",
      "status": "completed"
     },
     "tags": []
@@ -1282,7 +1643,7 @@
   },
   {
    "cell_type": "markdown",
-   "id": "641330c5",
+   "id": "7fefc8dc",
    "metadata": {
     "execution": {
      "iopub.execute_input": "2025-07-18T20:54:43.446262Z",
@@ -1291,10 +1652,10 @@
      "shell.execute_reply": "2025-07-18T20:54:43.550621Z"
     },
     "papermill": {
-     "duration": 0.010469,
-     "end_time": "2025-07-19T00:12:51.657899",
+     "duration": 0.01147,
+     "end_time": "2025-07-19T02:57:56.308718",
      "exception": false,
-     "start_time": "2025-07-19T00:12:51.647430",
+     "start_time": "2025-07-19T02:57:56.297248",
      "status": "completed"
     },
     "tags": []
@@ -1307,20 +1668,20 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 12,
-   "id": "99fb7f4e",
+   "execution_count": 13,
+   "id": "2d5b309d",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2025-07-19T00:12:51.683953Z",
-     "iopub.status.busy": "2025-07-19T00:12:51.681874Z",
-     "iopub.status.idle": "2025-07-19T00:12:51.769953Z",
-     "shell.execute_reply": "2025-07-19T00:12:51.766890Z"
+     "iopub.execute_input": "2025-07-19T02:57:56.336840Z",
+     "iopub.status.busy": "2025-07-19T02:57:56.335161Z",
+     "iopub.status.idle": "2025-07-19T02:57:56.402350Z",
+     "shell.execute_reply": "2025-07-19T02:57:56.399809Z"
     },
     "papermill": {
-     "duration": 0.105726,
-     "end_time": "2025-07-19T00:12:51.773782",
+     "duration": 0.08551,
+     "end_time": "2025-07-19T02:57:56.405548",
      "exception": false,
-     "start_time": "2025-07-19T00:12:51.668056",
+     "start_time": "2025-07-19T02:57:56.320038",
      "status": "completed"
     },
     "tags": []
@@ -1501,6 +1862,533 @@
     "\n",
     "reduced_sample"
    ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "25e3f332",
+   "metadata": {
+    "papermill": {
+     "duration": 0.012563,
+     "end_time": "2025-07-19T02:57:56.431021",
+     "exception": false,
+     "start_time": "2025-07-19T02:57:56.418458",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "source": [
+    "**Cleaning Dengue Cases and Deaths by Sex**"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 14,
+   "id": "2c724a99",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-07-19T02:57:56.458194Z",
+     "iopub.status.busy": "2025-07-19T02:57:56.456584Z",
+     "iopub.status.idle": "2025-07-19T02:57:56.792259Z",
+     "shell.execute_reply": "2025-07-19T02:57:56.784849Z"
+    },
+    "papermill": {
+     "duration": 0.352928,
+     "end_time": "2025-07-19T02:57:56.795547",
+     "exception": false,
+     "start_time": "2025-07-19T02:57:56.442619",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "\u001b[1m\u001b[22mNew names:\n",
+      "\u001b[36m•\u001b[39m `` -> `...2`\n",
+      "\u001b[36m•\u001b[39m `` -> `...3`\n",
+      "\u001b[36m•\u001b[39m `` -> `...4`\n",
+      "\u001b[36m•\u001b[39m `` -> `...5`\n",
+      "\u001b[36m•\u001b[39m `` -> `...6`\n",
+      "\u001b[36m•\u001b[39m `` -> `...7`\n",
+      "\u001b[36m•\u001b[39m `` -> `...8`\n",
+      "\u001b[36m•\u001b[39m `` -> `...9`\n",
+      "\u001b[36m•\u001b[39m `` -> `...10`\n",
+      "\u001b[36m•\u001b[39m `` -> `...11`\n",
+      "\u001b[36m•\u001b[39m `` -> `...12`\n",
+      "\u001b[36m•\u001b[39m `` -> `...13`\n",
+      "\u001b[36m•\u001b[39m `` -> `...14`\n",
+      "\u001b[36m•\u001b[39m `` -> `...15`\n",
+      "\u001b[36m•\u001b[39m `` -> `...16`\n",
+      "\u001b[36m•\u001b[39m `` -> `...17`\n"
+     ]
+    }
+   ],
+   "source": [
+    "dengue_sex <- read_excel(\"/kaggle/input/dengue-dataset/Dengue.xlsx\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 15,
+   "id": "e0851204",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-07-19T02:57:56.823375Z",
+     "iopub.status.busy": "2025-07-19T02:57:56.821717Z",
+     "iopub.status.idle": "2025-07-19T02:57:56.874022Z",
+     "shell.execute_reply": "2025-07-19T02:57:56.871591Z"
+    },
+    "papermill": {
+     "duration": 0.069557,
+     "end_time": "2025-07-19T02:57:56.877050",
+     "exception": false,
+     "start_time": "2025-07-19T02:57:56.807493",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<table class=\"dataframe\">\n",
+       "<caption>A tibble: 7 × 17</caption>\n",
+       "<thead>\n",
+       "\t<tr><th scope=col>Table 5.5.1a</th><th scope=col>...2</th><th scope=col>...3</th><th scope=col>...4</th><th scope=col>...5</th><th scope=col>...6</th><th scope=col>...7</th><th scope=col>...8</th><th scope=col>...9</th><th scope=col>...10</th><th scope=col>...11</th><th scope=col>...12</th><th scope=col>...13</th><th scope=col>...14</th><th scope=col>...15</th><th scope=col>...16</th><th scope=col>...17</th></tr>\n",
+       "\t<tr><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th></tr>\n",
+       "</thead>\n",
+       "<tbody>\n",
+       "\t<tr><td>NA                          </td><td>Cases</td><td>Deaths</td><td>Cases</td><td>Deaths</td><td>Cases </td><td>Deaths</td><td>Cases </td><td>Deaths</td><td>Cases </td><td>Deaths</td><td>Cases </td><td>Deaths</td><td>Cases </td><td>Deaths</td><td>Cases </td><td>Deaths</td></tr>\n",
+       "\t<tr><td>NA                          </td><td>NA   </td><td>NA    </td><td>NA   </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td></tr>\n",
+       "\t<tr><td>Philippines                 </td><td>46389</td><td>415   </td><td>57818</td><td>548   </td><td>173029</td><td>1057  </td><td>125975</td><td>654   </td><td>187031</td><td>921   </td><td>204906</td><td>660   </td><td>121580</td><td>465   </td><td>213930</td><td>647   </td></tr>\n",
+       "\t<tr><td>NA                          </td><td>NA   </td><td>NA    </td><td>NA   </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td></tr>\n",
+       "\t<tr><td>Female                      </td><td>21968</td><td>232   </td><td>27439</td><td>288   </td><td>83302 </td><td>573   </td><td>58853 </td><td>370   </td><td>88243 </td><td>519   </td><td>95763 </td><td>339   </td><td>57166 </td><td>242   </td><td>100953</td><td>366   </td></tr>\n",
+       "\t<tr><td>Male                        </td><td>24421</td><td>183   </td><td>30379</td><td>260   </td><td>89727 </td><td>484   </td><td>67122 </td><td>284   </td><td>98788 </td><td>402   </td><td>109143</td><td>321   </td><td>64414 </td><td>223   </td><td>112977</td><td>281   </td></tr>\n",
+       "\t<tr><td>Source: Department of Health</td><td>NA   </td><td>NA    </td><td>NA   </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td><td>NA    </td></tr>\n",
+       "</tbody>\n",
+       "</table>\n"
+      ],
+      "text/latex": [
+       "A tibble: 7 × 17\n",
+       "\\begin{tabular}{lllllllllllllllll}\n",
+       " Table 5.5.1a & ...2 & ...3 & ...4 & ...5 & ...6 & ...7 & ...8 & ...9 & ...10 & ...11 & ...12 & ...13 & ...14 & ...15 & ...16 & ...17\\\\\n",
+       " <chr> & <chr> & <chr> & <chr> & <chr> & <chr> & <chr> & <chr> & <chr> & <chr> & <chr> & <chr> & <chr> & <chr> & <chr> & <chr> & <chr>\\\\\n",
+       "\\hline\n",
+       "\t NA                           & Cases & Deaths & Cases & Deaths & Cases  & Deaths & Cases  & Deaths & Cases  & Deaths & Cases  & Deaths & Cases  & Deaths & Cases  & Deaths\\\\\n",
+       "\t NA                           & NA    & NA     & NA    & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA    \\\\\n",
+       "\t Philippines                  & 46389 & 415    & 57818 & 548    & 173029 & 1057   & 125975 & 654    & 187031 & 921    & 204906 & 660    & 121580 & 465    & 213930 & 647   \\\\\n",
+       "\t NA                           & NA    & NA     & NA    & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA    \\\\\n",
+       "\t Female                       & 21968 & 232    & 27439 & 288    & 83302  & 573    & 58853  & 370    & 88243  & 519    & 95763  & 339    & 57166  & 242    & 100953 & 366   \\\\\n",
+       "\t Male                         & 24421 & 183    & 30379 & 260    & 89727  & 484    & 67122  & 284    & 98788  & 402    & 109143 & 321    & 64414  & 223    & 112977 & 281   \\\\\n",
+       "\t Source: Department of Health & NA    & NA     & NA    & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA     & NA    \\\\\n",
+       "\\end{tabular}\n"
+      ],
+      "text/markdown": [
+       "\n",
+       "A tibble: 7 × 17\n",
+       "\n",
+       "| Table 5.5.1a &lt;chr&gt; | ...2 &lt;chr&gt; | ...3 &lt;chr&gt; | ...4 &lt;chr&gt; | ...5 &lt;chr&gt; | ...6 &lt;chr&gt; | ...7 &lt;chr&gt; | ...8 &lt;chr&gt; | ...9 &lt;chr&gt; | ...10 &lt;chr&gt; | ...11 &lt;chr&gt; | ...12 &lt;chr&gt; | ...13 &lt;chr&gt; | ...14 &lt;chr&gt; | ...15 &lt;chr&gt; | ...16 &lt;chr&gt; | ...17 &lt;chr&gt; |\n",
+       "|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|\n",
+       "| NA                           | Cases | Deaths | Cases | Deaths | Cases  | Deaths | Cases  | Deaths | Cases  | Deaths | Cases  | Deaths | Cases  | Deaths | Cases  | Deaths |\n",
+       "| NA                           | NA    | NA     | NA    | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     |\n",
+       "| Philippines                  | 46389 | 415    | 57818 | 548    | 173029 | 1057   | 125975 | 654    | 187031 | 921    | 204906 | 660    | 121580 | 465    | 213930 | 647    |\n",
+       "| NA                           | NA    | NA     | NA    | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     |\n",
+       "| Female                       | 21968 | 232    | 27439 | 288    | 83302  | 573    | 58853  | 370    | 88243  | 519    | 95763  | 339    | 57166  | 242    | 100953 | 366    |\n",
+       "| Male                         | 24421 | 183    | 30379 | 260    | 89727  | 484    | 67122  | 284    | 98788  | 402    | 109143 | 321    | 64414  | 223    | 112977 | 281    |\n",
+       "| Source: Department of Health | NA    | NA     | NA    | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     | NA     |\n",
+       "\n"
+      ],
+      "text/plain": [
+       "  Table 5.5.1a                 ...2  ...3   ...4  ...5   ...6   ...7   ...8  \n",
+       "1 NA                           Cases Deaths Cases Deaths Cases  Deaths Cases \n",
+       "2 NA                           NA    NA     NA    NA     NA     NA     NA    \n",
+       "3 Philippines                  46389 415    57818 548    173029 1057   125975\n",
+       "4 NA                           NA    NA     NA    NA     NA     NA     NA    \n",
+       "5 Female                       21968 232    27439 288    83302  573    58853 \n",
+       "6 Male                         24421 183    30379 260    89727  484    67122 \n",
+       "7 Source: Department of Health NA    NA     NA    NA     NA     NA     NA    \n",
+       "  ...9   ...10  ...11  ...12  ...13  ...14  ...15  ...16  ...17 \n",
+       "1 Deaths Cases  Deaths Cases  Deaths Cases  Deaths Cases  Deaths\n",
+       "2 NA     NA     NA     NA     NA     NA     NA     NA     NA    \n",
+       "3 654    187031 921    204906 660    121580 465    213930 647   \n",
+       "4 NA     NA     NA     NA     NA     NA     NA     NA     NA    \n",
+       "5 370    88243  519    95763  339    57166  242    100953 366   \n",
+       "6 284    98788  402    109143 321    64414  223    112977 281   \n",
+       "7 NA     NA     NA     NA     NA     NA     NA     NA     NA    "
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "dengue_sex <- dengue_sex[36:42, 1:17]\n",
+    "\n",
+    "dengue_sex"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 16,
+   "id": "667c2dd5",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-07-19T02:57:56.905990Z",
+     "iopub.status.busy": "2025-07-19T02:57:56.904334Z",
+     "iopub.status.idle": "2025-07-19T02:57:56.978371Z",
+     "shell.execute_reply": "2025-07-19T02:57:56.976494Z"
+    },
+    "papermill": {
+     "duration": 0.091843,
+     "end_time": "2025-07-19T02:57:56.981842",
+     "exception": false,
+     "start_time": "2025-07-19T02:57:56.889999",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "# Extracting Female and Male data\n",
+    "\n",
+    "female <- dengue_sex[5, 1:17]\n",
+    "male   <- dengue_sex[6, 1:17]\n",
+    "\n",
+    "# Assigning column names\n",
+    "\n",
+    "colnames(female) <- c(\"Sex\", paste0(rep(2008:2015, each = 2), \"_\", rep(c(\"Cases\", \"Deaths\"), 8)))\n",
+    "colnames(male)   <- colnames(female)\n",
+    "\n",
+    "female_df <- as_tibble(female)\n",
+    "male_df   <- as_tibble(male)\n",
+    "\n",
+    "combined_df <- bind_rows(female_df, male_df)\n",
+    "\n",
+    "# Creating separate df for cases and deaths\n",
+    "\n",
+    "cases_df <- combined_df %>%\n",
+    "  select(Sex, matches(\"Cases$\")) %>%\n",
+    "  pivot_longer(-Sex, names_to = \"Year\", values_to = \"Cases\") %>%\n",
+    "  mutate(Year = gsub(\"_Cases\", \"\", Year)) %>%\n",
+    "  pivot_wider(names_from = Sex, values_from = Cases) %>%\n",
+    "  mutate(across(-Year, as.numeric))\n",
+    "\n",
+    "deaths_df <- combined_df %>%\n",
+    "  select(Sex, matches(\"Deaths$\")) %>%\n",
+    "  pivot_longer(-Sex, names_to = \"Year\", values_to = \"Deaths\") %>%\n",
+    "  mutate(Year = gsub(\"_Deaths\", \"\", Year)) %>%\n",
+    "  pivot_wider(names_from = Sex, values_from = Deaths) %>%\n",
+    "  mutate(across(-Year, as.numeric))\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 17,
+   "id": "afdd31ad",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-07-19T02:57:57.013504Z",
+     "iopub.status.busy": "2025-07-19T02:57:57.011729Z",
+     "iopub.status.idle": "2025-07-19T02:57:57.051113Z",
+     "shell.execute_reply": "2025-07-19T02:57:57.048675Z"
+    },
+    "papermill": {
+     "duration": 0.058984,
+     "end_time": "2025-07-19T02:57:57.054163",
+     "exception": false,
+     "start_time": "2025-07-19T02:57:56.995179",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<table class=\"dataframe\">\n",
+       "<caption>A tibble: 8 × 3</caption>\n",
+       "<thead>\n",
+       "\t<tr><th scope=col>Year</th><th scope=col>Female</th><th scope=col>Male</th></tr>\n",
+       "\t<tr><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th></tr>\n",
+       "</thead>\n",
+       "<tbody>\n",
+       "\t<tr><td>2008</td><td> 21968</td><td> 24421</td></tr>\n",
+       "\t<tr><td>2009</td><td> 27439</td><td> 30379</td></tr>\n",
+       "\t<tr><td>2010</td><td> 83302</td><td> 89727</td></tr>\n",
+       "\t<tr><td>2011</td><td> 58853</td><td> 67122</td></tr>\n",
+       "\t<tr><td>2012</td><td> 88243</td><td> 98788</td></tr>\n",
+       "\t<tr><td>2013</td><td> 95763</td><td>109143</td></tr>\n",
+       "\t<tr><td>2014</td><td> 57166</td><td> 64414</td></tr>\n",
+       "\t<tr><td>2015</td><td>100953</td><td>112977</td></tr>\n",
+       "</tbody>\n",
+       "</table>\n"
+      ],
+      "text/latex": [
+       "A tibble: 8 × 3\n",
+       "\\begin{tabular}{lll}\n",
+       " Year & Female & Male\\\\\n",
+       " <chr> & <int> & <int>\\\\\n",
+       "\\hline\n",
+       "\t 2008 &  21968 &  24421\\\\\n",
+       "\t 2009 &  27439 &  30379\\\\\n",
+       "\t 2010 &  83302 &  89727\\\\\n",
+       "\t 2011 &  58853 &  67122\\\\\n",
+       "\t 2012 &  88243 &  98788\\\\\n",
+       "\t 2013 &  95763 & 109143\\\\\n",
+       "\t 2014 &  57166 &  64414\\\\\n",
+       "\t 2015 & 100953 & 112977\\\\\n",
+       "\\end{tabular}\n"
+      ],
+      "text/markdown": [
+       "\n",
+       "A tibble: 8 × 3\n",
+       "\n",
+       "| Year &lt;chr&gt; | Female &lt;int&gt; | Male &lt;int&gt; |\n",
+       "|---|---|---|\n",
+       "| 2008 |  21968 |  24421 |\n",
+       "| 2009 |  27439 |  30379 |\n",
+       "| 2010 |  83302 |  89727 |\n",
+       "| 2011 |  58853 |  67122 |\n",
+       "| 2012 |  88243 |  98788 |\n",
+       "| 2013 |  95763 | 109143 |\n",
+       "| 2014 |  57166 |  64414 |\n",
+       "| 2015 | 100953 | 112977 |\n",
+       "\n"
+      ],
+      "text/plain": [
+       "  Year Female Male  \n",
+       "1 2008  21968  24421\n",
+       "2 2009  27439  30379\n",
+       "3 2010  83302  89727\n",
+       "4 2011  58853  67122\n",
+       "5 2012  88243  98788\n",
+       "6 2013  95763 109143\n",
+       "7 2014  57166  64414\n",
+       "8 2015 100953 112977"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "# Dengue Cases by Sex\n",
+    "\n",
+    "cases_df$Female <- as.integer(cases_df$Female)\n",
+    "cases_df$Male <- as.integer(cases_df$Male)\n",
+    "cases_df"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 18,
+   "id": "1045646f",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-07-19T02:57:57.083036Z",
+     "iopub.status.busy": "2025-07-19T02:57:57.081420Z",
+     "iopub.status.idle": "2025-07-19T02:57:57.371668Z",
+     "shell.execute_reply": "2025-07-19T02:57:57.368835Z"
+    },
+    "papermill": {
+     "duration": 0.308474,
+     "end_time": "2025-07-19T02:57:57.374902",
+     "exception": false,
+     "start_time": "2025-07-19T02:57:57.066428",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "data": {
+      "image/png": "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\nIBL/H9Gg7QMMzPbLAAAAAElFTkSuQmCC"
+     },
+     "metadata": {
+      "image/png": {
+       "height": 420,
+       "width": 420
+      }
+     },
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "dengue_long_sex <- cases_df %>%\n",
+    "  pivot_longer(cols = c(Female, Male), names_to = \"Sex\", values_to = \"Cases\")\n",
+    "\n",
+    "ggplot(dengue_long_sex, aes(x = Year, y = Cases, fill = Sex)) +\n",
+    "  geom_col(position = \"dodge\") +\n",
+    "  labs(title = \"Dengue Cases by Sex (2008–2015)\",\n",
+    "       x = \"Year\",\n",
+    "       y = \"Number of Cases\") +\n",
+    "  scale_fill_manual(values = c(\"Female\" = \"#FF69B4\", \"Male\" = \"#1E90FF\")) +\n",
+    "  theme_minimal()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 19,
+   "id": "753c3db6",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-07-19T02:57:57.407157Z",
+     "iopub.status.busy": "2025-07-19T02:57:57.405254Z",
+     "iopub.status.idle": "2025-07-19T02:57:57.448001Z",
+     "shell.execute_reply": "2025-07-19T02:57:57.445458Z"
+    },
+    "papermill": {
+     "duration": 0.062572,
+     "end_time": "2025-07-19T02:57:57.451239",
+     "exception": false,
+     "start_time": "2025-07-19T02:57:57.388667",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<table class=\"dataframe\">\n",
+       "<caption>A tibble: 8 × 3</caption>\n",
+       "<thead>\n",
+       "\t<tr><th scope=col>Year</th><th scope=col>Female</th><th scope=col>Male</th></tr>\n",
+       "\t<tr><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th></tr>\n",
+       "</thead>\n",
+       "<tbody>\n",
+       "\t<tr><td>2008</td><td>232</td><td>183</td></tr>\n",
+       "\t<tr><td>2009</td><td>288</td><td>260</td></tr>\n",
+       "\t<tr><td>2010</td><td>573</td><td>484</td></tr>\n",
+       "\t<tr><td>2011</td><td>370</td><td>284</td></tr>\n",
+       "\t<tr><td>2012</td><td>519</td><td>402</td></tr>\n",
+       "\t<tr><td>2013</td><td>339</td><td>321</td></tr>\n",
+       "\t<tr><td>2014</td><td>242</td><td>223</td></tr>\n",
+       "\t<tr><td>2015</td><td>366</td><td>281</td></tr>\n",
+       "</tbody>\n",
+       "</table>\n"
+      ],
+      "text/latex": [
+       "A tibble: 8 × 3\n",
+       "\\begin{tabular}{lll}\n",
+       " Year & Female & Male\\\\\n",
+       " <chr> & <int> & <int>\\\\\n",
+       "\\hline\n",
+       "\t 2008 & 232 & 183\\\\\n",
+       "\t 2009 & 288 & 260\\\\\n",
+       "\t 2010 & 573 & 484\\\\\n",
+       "\t 2011 & 370 & 284\\\\\n",
+       "\t 2012 & 519 & 402\\\\\n",
+       "\t 2013 & 339 & 321\\\\\n",
+       "\t 2014 & 242 & 223\\\\\n",
+       "\t 2015 & 366 & 281\\\\\n",
+       "\\end{tabular}\n"
+      ],
+      "text/markdown": [
+       "\n",
+       "A tibble: 8 × 3\n",
+       "\n",
+       "| Year &lt;chr&gt; | Female &lt;int&gt; | Male &lt;int&gt; |\n",
+       "|---|---|---|\n",
+       "| 2008 | 232 | 183 |\n",
+       "| 2009 | 288 | 260 |\n",
+       "| 2010 | 573 | 484 |\n",
+       "| 2011 | 370 | 284 |\n",
+       "| 2012 | 519 | 402 |\n",
+       "| 2013 | 339 | 321 |\n",
+       "| 2014 | 242 | 223 |\n",
+       "| 2015 | 366 | 281 |\n",
+       "\n"
+      ],
+      "text/plain": [
+       "  Year Female Male\n",
+       "1 2008 232    183 \n",
+       "2 2009 288    260 \n",
+       "3 2010 573    484 \n",
+       "4 2011 370    284 \n",
+       "5 2012 519    402 \n",
+       "6 2013 339    321 \n",
+       "7 2014 242    223 \n",
+       "8 2015 366    281 "
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "# Dengue Deaths by Sex\n",
+    "\n",
+    "deaths_df$Female <- as.integer(deaths_df$Female)\n",
+    "deaths_df$Male <- as.integer(deaths_df$Male)\n",
+    "deaths_df"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 20,
+   "id": "10bd64f8",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2025-07-19T02:57:57.481045Z",
+     "iopub.status.busy": "2025-07-19T02:57:57.479454Z",
+     "iopub.status.idle": "2025-07-19T02:57:57.747727Z",
+     "shell.execute_reply": "2025-07-19T02:57:57.744930Z"
+    },
+    "papermill": {
+     "duration": 0.286407,
+     "end_time": "2025-07-19T02:57:57.750710",
+     "exception": false,
+     "start_time": "2025-07-19T02:57:57.464303",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "data": {
+      "image/png": "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\nCgAgn+Vp2IVE6egjB71z+/g/vvDmvPdenXHpdRWb7Dts8y4dvSwAgPyVpz+KDSFsdfQV59Td\ncPekSxfWJgbstNcVE07P1wgFAMgL+Rt2IZEcetKooSd19DIAADYQngUDAIiEsAMAiISwAwCI\nhLADAIiEsAMAiISwAwCIhLADAIiEsAMAiISwAwCIhLADAIiEsAMAiISwAwCIhLADAIiEsAMA\niISwAwCIhLADAIiEsAMAiISwAwCIhLADAIiEsAMAiISwAwCIhLADAIiEsAMAiISwAwCIhLAD\nAIiEsAMAiISwAwCIRCKdTnf0GqLSfH8mEomOXki7W7Vzoh+2cCYNhbeBC2fSUADDFs6koZA2\nMK0l7AAAIuFHsQAAkRB2AACREHYAAJEQdgAAkRB2AACREHYAFJzaJYtrUn4pBBEq7ugFbADS\njYvvv+Xmh59+eWFt0SZ9tz70xLMOGNxn5cnU43dPmznrxQ+rk4O23+3kc4f3ryjOeDykGxfP\nvG36w8+89q8VyS36b3/UWefs3rdzh8y1Ti0P2+pJm+rn3z39lr+8/OaC6vSAnfY4/bzTtu5S\n0lFzra31k652+9knlU+YfsxGnVYeWP9VOlCbNvCn1pp0Pcc7XJsf1rUnyni/dbwsbuD6f791\n6+SfP/3Ku7XJzltsue0RZ4z4Rr8uuZ0mk/bYwLULnzn1tJ9886f/c2afDeLTb2jDpAueGXv6\nj19Z8zKn3HbvYb3K230MOppn7Nbv91eOvuuJBYcO/95Vl4/ZZ0DdtPEjHvhwWfOp9+4bN+me\nZ4Ycfvpl5w/r8u5jY79/cyrj8RDCY1eO/sVjCw89ffSVY8/bpuT1q0eN+bghtc732yFaGrb1\nk6Z+NmrUzFdTR5895sqx523+72fHnX99fT59e9zaSVdKv/3krfd/tKRxjV8Aub6rdLA2bOAQ\nwjonzXg8L7TpYV33RBnut3yQvQ2cnvaDS5/+pM+IcRN/PPa8Qck3rh095pMN4ZNSaOMGDunU\nimkX3VjdlHcbOLuTLnlpSadeVRet4Wtd8+hba9pRmowaaz847NBDJ726aOWB1JRhR5100TPp\ndDqdqhtx1GHfv+ed5hO1i5+sqqr65T+XtXg8nU6lao/8zqHjnlmw8sbfr6qquvq9pTkdqWUt\nDtv6SZd9dHtVVdWfF6749Jbr5p50+Hcmvb44xxO1pNWTptPpdHrB05NOPvaIqqqqqqqqOxYs\n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\nYQcAEIn/D6jfRHQDvSR2AAAAAElFTkSuQmCC"
+     },
+     "metadata": {
+      "image/png": {
+       "height": 420,
+       "width": 420
+      }
+     },
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "long_sex_death <- deaths_df %>%\n",
+    "  pivot_longer(cols = c(Female, Male), names_to = \"Sex\", values_to = \"Cases\")\n",
+    "\n",
+    "ggplot(long_sex_death, aes(x = Year, y = Cases, fill = Sex)) +\n",
+    "  geom_col(position = \"dodge\") +\n",
+    "  labs(title = \"Dengue Deaths by Sex (2008–2015)\",\n",
+    "       x = \"Year\",\n",
+    "       y = \"Number of Cases\") +\n",
+    "  scale_fill_manual(values = c(\"Female\" = \"#FF69B4\", \"Male\" = \"#1E90FF\")) +\n",
+    "  theme_minimal()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "f69199bc",
+   "metadata": {
+    "papermill": {
+     "duration": 0.013444,
+     "end_time": "2025-07-19T02:57:57.777838",
+     "exception": false,
+     "start_time": "2025-07-19T02:57:57.764394",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": []
   }
  ],
  "metadata": {
@@ -1534,14 +2422,14 @@
   },
   "papermill": {
    "default_parameters": {},
-   "duration": 8.290531,
-   "end_time": "2025-07-19T00:12:51.908678",
+   "duration": 8.578655,
+   "end_time": "2025-07-19T02:57:57.912899",
    "environment_variables": {},
    "exception": null,
    "input_path": "__notebook__.ipynb",
    "output_path": "__notebook__.ipynb",
    "parameters": {},
-   "start_time": "2025-07-19T00:12:43.618147",
+   "start_time": "2025-07-19T02:57:49.334244",
    "version": "2.6.0"
   }
  },
